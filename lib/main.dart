@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     Transaction(
       id: 't3',
-      title: 'New keyboart',
+      title: 'New keyboard',
       amount: 69.99,
       date: DateTime.now(),
     ),
@@ -73,10 +74,71 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             elevation: 5,
           ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: <Widget>[
+                  TextField(
+                    cursorColor: Colors.red,
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    cursorColor: Colors.red,
+                    decoration: InputDecoration(labelText: 'Amount'),
+                  ),
+                  FlatButton(
+                    child: Text('Add Transaction'),
+                    onPressed: null,
+                    hoverColor: Colors.deepOrangeAccent,
+                  )
+                ],
+              ),
+            ),
+          ),
           Column(
             children: transactions.map((transaction) {
               return Card(
-                child: Text(transaction.title),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        "\$" + transaction.amount.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.purple,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        color: Colors.black,
+                      )),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(
+                          transaction.title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17),
+                        ),
+                        Text(
+                          DateFormat.yMMMd().format(transaction.date),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                ),
+                margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
               );
             }).toList(),
           ),
